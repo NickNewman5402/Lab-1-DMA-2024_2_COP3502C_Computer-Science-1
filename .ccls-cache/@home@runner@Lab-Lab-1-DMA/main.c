@@ -54,7 +54,48 @@ student **readCourses(int C, int N, int M) {
 }// Closes readCourses function
 
 void printHighestTotal(student **courseList, int C, int N, int M) {
+
   int max = 0;
+  //int itter = 0;
+  student *tmp = malloc(sizeof(student));
+  for (int i = 0; i < C; i++) {
+    for (int j = 0; j < N; j++) {
+      for (int k = j + 1; k < N; k++) {
+        //if (&courseList[i][j + 1] <= &courseList[i][N - 1]) {
+          if (courseList[i][j].total < courseList[i][k].total) {
+            tmp[0] = courseList[i][j];
+            courseList[i][j] = courseList[i][k];
+            courseList[i][k] = tmp[0];
+            //max = courseList[i][j].total;
+            //itter++;
+          }
+        //}
+      }
+    }
+  }
+
+  for (int i = 0; i < C; i++) {
+    if (courseList[i][0].total > max) {
+      max = courseList[i][0].total;
+    }
+  }
+
+  for (int i = 0; i < C; i++) {
+      if (max == courseList[i][0].total) {
+        printf("Name: %s\nAssignment: %d\nQuizzes: ", courseList[i][0].lname, courseList[i][0].assignment);
+        for (int k = 0; k < M; k++) {
+          printf("%d ", courseList[i][0].quizzes[k]);
+        }
+        printf("\nFinal exam: %d\nTotal: %d\nCourse number: %d", courseList[i][0].finalExam, courseList[i][0].total, i + 1);
+      }
+  }
+
+  free(tmp);
+  
+  
+  
+  
+  /* int max = 0;
   for (int i = 0; i < C; i++) {
     for (int j = 0; j < N; j++) {
       if (courseList[i][j].total > max) {
@@ -73,8 +114,8 @@ void printHighestTotal(student **courseList, int C, int N, int M) {
         printf("\nFinal exam: %d\nTotal: %d\nCourse number: %d", courseList[i][j].finalExam, courseList[i][j].total, i + 1);
       }
     }
-  }
-
+ }
+*/
 }
 
 void release_memory(student **st, int C, int N, int M) {
